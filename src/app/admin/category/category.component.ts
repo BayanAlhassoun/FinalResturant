@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-category',
@@ -11,9 +12,14 @@ import { Component } from '@angular/core';
     "../../../assets/admin/vendors/font-awesome/css/font-awesome.min.css",
    "../../../assets/admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css",
     "../../../assets/admin/css/style.css",
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class CategoryComponent {
+  constructor(public adminService: AdminService)
+  {
+
+  }
 ngOnInit()
 {
   let scripts = [
@@ -36,5 +42,7 @@ ngOnInit()
     document.body.appendChild(script)
   }
   )
+
+  this.adminService.GetAllCategories();
 }
 }

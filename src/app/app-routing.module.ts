@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: ()=>import('./employee/employee.module').then(x=>x.EmployeeModule)
   },
     {
-    path: "home",
+    path: "",
     loadChildren: ()=>import('./home/home.module').then(x=>x.HomeModule)
   },
 ];

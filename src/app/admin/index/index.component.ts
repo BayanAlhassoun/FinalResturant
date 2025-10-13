@@ -3,14 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css',
-       "../../../assets/admin/vendors/mdi/css/materialdesignicons.min.css",
-    "../../../assets/admin/vendors/ti-icons/css/themify-icons.css",
-    "../../../assets/admin/vendors/css/vendor.bundle.base.css",
-    "../../../assets/admin/vendors/font-awesome/css/font-awesome.min.css",
-    "../../../assets/admin/vendors/font-awesome/css/font-awesome.min.css",
-   "../../../assets/admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css",
-    "../../../assets/admin/css/style.css"
+  styleUrls: ['./index.component.css'
   ],
 
 })
@@ -18,6 +11,24 @@ import { Component, ViewEncapsulation } from '@angular/core';
 export class IndexComponent {
 ngOnInit()
 {
+
+  let styles = [
+       "../../../assets/admin/vendors/mdi/css/materialdesignicons.min.css",
+    "../../../assets/admin/vendors/ti-icons/css/themify-icons.css",
+    "../../../assets/admin/vendors/css/vendor.bundle.base.css",
+    "../../../assets/admin/vendors/font-awesome/css/font-awesome.min.css",
+    "../../../assets/admin/vendors/font-awesome/css/font-awesome.min.css",
+   "../../../assets/admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css",
+    "../../../assets/admin/css/style.css"
+  ]
+
+  styles.forEach(s => {
+    let link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = s;
+    document.head.appendChild(link);
+  })
+
   let scripts = [
      "../../../assets/admin/vendors/js/vendor.bundle.base.js",
     "../../../assets/admin/vendors/chart.js/chart.umd.js",
