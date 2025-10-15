@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -15,7 +17,10 @@ import { AdminService } from 'src/app/services/admin.service';
   ]
 })
 export class UsersComponent {
-  constructor(public adminService: AdminService)
+
+@ViewChild('CreateCustomerDialog') callUpdateDialog!: TemplateRef<any>
+
+  constructor(public adminService: AdminService, public dialog: MatDialog)
   {
 
   }
@@ -43,5 +48,24 @@ ngOnInit()
   )
 
   this.adminService.GetAllCustomers()
+}
+
+CreateCustomer: FormGroup = new FormGroup({
+  name: new FormControl('', [Validators.required]),
+  phone: new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
+  email: new FormControl('', [Validators.required]),
+  gender_Id: new FormControl('', Validators.max(2))
+})
+
+Create()
+{
+  this.adminService.CreateCustomer(this.CreateCustomer.value)
+  this.dialog.closeAll()
+}
+
+OpenCreateDialog()
+{
+this.dialog.open(this.callUpdateDialog,
+  {height: '50%' , width: '40%%'})
 }
 }

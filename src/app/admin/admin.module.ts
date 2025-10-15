@@ -9,6 +9,8 @@ import { CategoryComponent } from './category/category.component';
 import { UsersComponent } from './users/users.component';
 import { ProductsComponent } from './products/products.component';
 import { IndexComponent } from './index/index.component';
+import { SharedModule } from '../shared/shared.module';
+
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { IndexComponent } from './index/index.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    SharedModule
+
   ]
 })
 export class AdminModule { }

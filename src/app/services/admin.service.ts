@@ -34,4 +34,24 @@ GetAllCustomers()
   )
 }
 
+CreateCategory(category: any)
+{
+  this.httpClient.post("https://localhost:7031/api/category", category).subscribe(
+    {
+      next: ()=>{console.log("Created Successfully");},
+      error: (err)=>{console.log(err);}
+    }
+  )
+}
+
+CreateCustomer(customer: any)
+{
+  this.httpClient.post("https://localhost:7031/api/customer", customer).subscribe({
+    next: ()=>{console.log("Created Successfully");
+    },
+    error: (err)=>{console.log(err);
+    }
+  })
+}
+
 }

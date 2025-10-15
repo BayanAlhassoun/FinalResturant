@@ -1,4 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -16,7 +18,9 @@ import { AdminService } from 'src/app/services/admin.service';
   encapsulation: ViewEncapsulation.None
 })
 export class CategoryComponent {
-  constructor(public adminService: AdminService)
+
+ @ViewChild('CreateCategoryDialog') callCreateCategoryDialog !: TemplateRef<any>;
+  constructor(public adminService: AdminService, public dialog: MatDialog)
   {
 
   }
@@ -45,4 +49,27 @@ ngOnInit()
 
   this.adminService.GetAllCategories();
 }
+
+CreateForm: FormGroup = new FormGroup(
+  {
+    category_name: new FormControl('', [Validators.required, Validators.minLength(3)])
+  }
+)
+
+Create()
+{
+  this.adminService.CreateCategory(this.CreateForm.value);
+  this.dialog.closeAll()
+}
+
+OpenCreateDialog()
+{
+this.dialog.open(this.callCreateCategoryDialog,
+  {
+    height: '50%',
+    width: '50%'
+  }
+)
+}
+
 }

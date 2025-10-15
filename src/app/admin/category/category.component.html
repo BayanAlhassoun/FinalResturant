@@ -29,9 +29,8 @@
           <div class="content-wrapper">
             <div class="page-header">
               <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white me-2">
-                  <i class="mdi mdi-home"></i>
-                </span> Dashboard
+                <button (click)="OpenCreateDialog()" mat-raised-button>Create</button>
+
               </h3>
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -53,13 +52,21 @@
                         <thead>
                           <tr>
                             <th> Category Id </th>
-                            <th> Category Name </th>                         
+                            <th> Category Name </th>   
+                            <th>Actions</th>                      
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let c of adminService.categories">
                             <td> {{c.category_Id}} </td>
                             <td>{{c.category_Name}} </td>
+                            <td>
+                                    <div class="example-button-container">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -71,6 +78,10 @@
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
+
+
+
+
 <app-footer></app-footer>
           <!-- partial -->
         </div>
@@ -82,3 +93,16 @@
     <!-- plugins:js -->
 
     <!-- End custom js for this page -->
+
+
+    <ng-template #CreateCategoryDialog>
+      <form [formGroup]="CreateForm" (ngSubmit)="Create()">
+   <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input matInput formControlName="category_name" required>
+    <mat-error *ngIf="CreateForm.controls['category_name'].hasError('required')" >Category name is required</mat-error>
+     <mat-error *ngIf="CreateForm.controls['category_name'].hasError('minlength')" >Category name should be greater than 3 chars</mat-error>
+  </mat-form-field>
+  <button>Create</button>
+</form>
+    </ng-template>
