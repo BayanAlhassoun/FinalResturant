@@ -31,7 +31,7 @@
             <div class="content-wrapper">
                 <div class="page-header">
                     <h3 class="page-title">
-                           <button (click)="OpenCreateDialog()" mat-raised-button>Create</button>
+                        <button (click)="OpenCreateDialog()" mat-raised-button>Create</button>
 
                     </h3>
                     <nav aria-label="breadcrumb">
@@ -55,19 +55,32 @@
                                         <thead>
                                             <tr>
                                                 <th> Name </th>
-                                                <th> Phone </th>
-                                                <th> Email </th>
+                                    
                                                 <th> Gender </th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let u of adminService.customers">
                                                 <td> {{u.name}} </td>
-                                                <td> {{u.phone}} </td>
-                                                <td> {{u.email}} </td>
                                                 <td *ngIf="u.gender_Id==1"> Male </td>
                                                 <td *ngIf="u.gender_Id==2"> Female </td>
+                                                <td *ngIf="u.gender_Id==null"> none </td>
 
+                                                <td class="actions">
+                                                    <button (click)="OpenDeleteDialog(u.customer_Id)" mat-fab color="primary"
+                                                        aria-label="Example icon button with a delete icon">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                    <button (click)="OpenUpdateDialog(u)" mat-fab color="primary"
+                                                        aria-label="Example icon button with a delete icon">
+                                                        <mat-icon>edit</mat-icon>
+                                                    </button>
+                                                    <button (click)="OpenMoreDialog(u)" mat-fab color="primary"
+                                                        aria-label="Example icon button with a delete icon">
+                                                        <mat-icon>more</mat-icon>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -98,76 +111,184 @@
 
 <ng-template #CreateCustomerDialog>
 
-            <div class="container">
-                <form [formGroup]="CreateCustomer" (ngSubmit)="Create()">
-                    <h2>Create Customer</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <mat-form-field>
-                                <mat-label for="first">First Name</mat-label>
+    <div class="container">
+        <form [formGroup]="CreateCustomer" (ngSubmit)="Create()">
+            <h2>Create Customer</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label for="first">First Name</mat-label>
 
-                                <input matInput type="text" class="form-control" placeholder="" id="first"
-                                    formControlName="name">
-                                <mat-error *ngIf="CreateCustomer.controls['name'].hasError('required')">Name is
-                                    required</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <!--  col-md-6   -->
+                        <input matInput type="text" class="form-control" placeholder="" id="first"
+                            formControlName="name">
+                        <mat-error *ngIf="CreateCustomer.controls['name'].hasError('required')">Name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+                <!--  col-md-6   -->
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <mat-label for="last">Phone</mat-label>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label for="last">Phone</mat-label>
 
 
-                                    <input matInput type="text" class="form-control" placeholder="" id="last"
-                                        formControlName="phone">
-                                    <mat-error *ngIf="CreateCustomer.controls['phone'].hasError('minlength')">Phone
-                                        number should be 10 chars</mat-error>
-                                    <mat-error *ngIf="CreateCustomer.controls['phone'].hasError('maxlength')">Phone
-                                        number should be 10 chars</mat-error>
+                            <input matInput type="text" class="form-control" placeholder="" id="last"
+                                formControlName="phone">
+                            <mat-error *ngIf="CreateCustomer.controls['phone'].hasError('minlength')">Phone
+                                number should be 10 chars</mat-error>
+                            <mat-error *ngIf="CreateCustomer.controls['phone'].hasError('maxlength')">Phone
+                                number should be 10 chars</mat-error>
 
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <!--  col-md-6   -->
+                        </mat-form-field>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <mat-label for="company">Email</mat-label>
-
-                                    <input matInput type="text" class="form-control" placeholder="" id="company"
-                                        formControlName="email">
-                                    <mat-error *ngIf="CreateCustomer.controls['email'].hasError('required')">email is
-                                        required</mat-error>
-                                </mat-form-field>
-
-                            </div>
-
-                        </div>
-                        <!--  col-md-6   -->
-
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <mat-label for="phone">Gender</mat-label>
-
-                                        <input matInput type="tel" class="form-control" id="phone"
-                                            formControlName="gender_Id">
-                                        <mat-error *ngIf="CreateCustomer.controls['gender_Id'].hasError('max')">Gender
-                                            sould be 1 or 2</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <!--  col-md-6   -->
-                    </div>
-                    <!--  row   -->
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                </div>
+                <!--  col-md-6   -->
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label for="company">Email</mat-label>
+
+                            <input matInput type="text" class="form-control" placeholder="" id="company"
+                                formControlName="email">
+                            <mat-error *ngIf="CreateCustomer.controls['email'].hasError('required')">email is
+                                required</mat-error>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+                <!--  col-md-6   -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label for="phone">Gender</mat-label>
+
+                            <input matInput type="tel" class="form-control" id="phone" formControlName="gender_Id">
+                            <mat-error *ngIf="CreateCustomer.controls['gender_Id'].hasError('max')">Gender
+                                sould be 1 or 2</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!--  col-md-6   -->
+            </div>
+            <!--  row   -->
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </ng-template>
+
+
+
+
+
+<ng-template #UpdateCustomerDialog>
+
+    <div class="container">
+        <form [formGroup]="UpdateCustomer" (ngSubmit)="Update()">
+            <h2>Create Customer</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label for="first">First Name</mat-label>
+
+                        <input matInput type="text" class="form-control" placeholder="" id="first"
+                            formControlName="name">
+                        <mat-error *ngIf="UpdateCustomer.controls['name'].hasError('required')">Name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+                <!--  col-md-6   -->
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label for="last">Phone</mat-label>
+
+
+                            <input matInput type="text" class="form-control" placeholder="" id="last"
+                                formControlName="phone">
+                            <mat-error *ngIf="UpdateCustomer.controls['phone'].hasError('minlength')">Phone
+                                number should be 10 chars</mat-error>
+                            <mat-error *ngIf="UpdateCustomer.controls['phone'].hasError('maxlength')">Phone
+                                number should be 10 chars</mat-error>
+
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!--  col-md-6   -->
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label for="company">Email</mat-label>
+
+                            <input matInput type="text" class="form-control" placeholder="" id="company"
+                                formControlName="email">
+                            <mat-error *ngIf="UpdateCustomer.controls['email'].hasError('required')">email is
+                                required</mat-error>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+                <!--  col-md-6   -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label for="phone">Gender</mat-label>
+
+                            <input matInput type="tel" class="form-control" id="phone" formControlName="gender_Id">
+                            <mat-error *ngIf="UpdateCustomer.controls['gender_Id'].hasError('max')">Gender
+                                sould be 1 or 2</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!--  col-md-6   -->
+            </div>
+            <!--  row   -->
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</ng-template>
+
+    <ng-template #DeleteCustomerDialog>
+      <h1 mat-dialog-title>Delete file</h1>
+<div mat-dialog-content>
+  Would you like to delete this item?
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button (click)="Delete()" mat-button mat-dialog-close cdkFocusInitial>Yes</button>
+</div>
+    </ng-template>
+
+        <ng-template #MoreCustomerDialog>
+      <h1 mat-dialog-title>More Info file</h1>
+<div mat-dialog-content>
+Name: {{user.name}}
+</div>
+<div mat-dialog-content>
+Phone: {{user.phone}}
+</div>
+<div mat-dialog-content>
+Email: {{user.email}}
+</div>
+<div mat-dialog-content>
+Gender: {{user.gender_Id}}
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Ok</button>
+</div>
+    </ng-template>

@@ -51,21 +51,24 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th> Category Id </th>
+                     
                             <th> Category Name </th>   
                             <th>Actions</th>                      
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let c of adminService.categories">
-                            <td> {{c.category_Id}} </td>
                             <td>{{c.category_Name}} </td>
-                            <td>
-                                    <div class="example-button-container">
-        <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+                            <td class="actions">
+        <button (click)="OpenDeleteDialog(c.category_Id)"  mat-fab color="primary" aria-label="Example icon button with a delete icon">
           <mat-icon>delete</mat-icon>
         </button>
-      </div>
+                <button (click)="OpenUpdateDialog(c)" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+          <mat-icon>edit</mat-icon>
+        </button>
+                        <button (click)="OpenMoreDialog(c.category_Id)" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+          <mat-icon>more</mat-icon>
+        </button>
                             </td>
                           </tr>
                         </tbody>
@@ -96,13 +99,52 @@
 
 
     <ng-template #CreateCategoryDialog>
-      <form [formGroup]="CreateForm" (ngSubmit)="Create()">
+      <form id="create" [formGroup]="CreateForm" (ngSubmit)="Create()">
    <mat-form-field>
     <mat-label>Enter your email</mat-label>
     <input matInput formControlName="category_name" required>
     <mat-error *ngIf="CreateForm.controls['category_name'].hasError('required')" >Category name is required</mat-error>
      <mat-error *ngIf="CreateForm.controls['category_name'].hasError('minlength')" >Category name should be greater than 3 chars</mat-error>
   </mat-form-field>
-  <button>Create</button>
+  <button class="btn btn-primary">Create</button>
 </form>
+    </ng-template>
+
+
+       <ng-template #UpdateCategoryDialog>
+      <form id="create" [formGroup]="UpdateForm" (ngSubmit)="Update()">
+   <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input matInput formControlName="category_Name" required>
+    <mat-error *ngIf="UpdateForm.controls['category_Name'].hasError('required')" >Category name is required</mat-error>
+     <mat-error *ngIf="UpdateForm.controls['category_Name'].hasError('minlength')" >Category name should be greater than 3 chars</mat-error>
+  </mat-form-field>
+  <button class="btn btn-primary">Update</button>
+</form>
+    </ng-template>
+
+
+    <ng-template #DeleteCategoryDialog>
+      <h1 mat-dialog-title>Delete file</h1>
+<div mat-dialog-content>
+  Would you like to delete this item?
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button (click)="Delete()" mat-button mat-dialog-close cdkFocusInitial>Yes</button>
+</div>
+    </ng-template>
+
+
+        <ng-template #MoreCategoryDialog>
+      <h1 mat-dialog-title>More Info file</h1>
+<div mat-dialog-content>
+category Id: {{adminService.category.category_Id}}
+</div>
+<div mat-dialog-content>
+category Name: {{adminService.category.category_Name}}
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Ok</button>
+</div>
     </ng-template>

@@ -18,7 +18,10 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class UsersComponent {
 
-@ViewChild('CreateCustomerDialog') callUpdateDialog!: TemplateRef<any>
+@ViewChild('CreateCustomerDialog') callCreateDialog!: TemplateRef<any>
+@ViewChild('UpdateCustomerDialog') callUpdateDialog!: TemplateRef<any>
+@ViewChild('DeleteCustomerDialog') callDeleteDialog!: TemplateRef<any>
+@ViewChild('MoreCustomerDialog') callMoreDialog!: TemplateRef<any>
 
   constructor(public adminService: AdminService, public dialog: MatDialog)
   {
@@ -57,6 +60,14 @@ CreateCustomer: FormGroup = new FormGroup({
   gender_Id: new FormControl('', Validators.max(2))
 })
 
+UpdateCustomer: FormGroup= new FormGroup({
+  customer_Id: new FormControl(),
+  name: new FormControl('', [Validators.required]),
+  phone: new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
+  email: new FormControl('', [Validators.required]),
+  gender_Id: new FormControl('', Validators.max(2))
+})
+
 Create()
 {
   this.adminService.CreateCustomer(this.CreateCustomer.value)
@@ -65,7 +76,41 @@ Create()
 
 OpenCreateDialog()
 {
-this.dialog.open(this.callUpdateDialog,
+this.dialog.open(this.callCreateDialog,
   {height: '50%' , width: '40%%'})
+}
+
+
+OpenUpdateDialog(customer: any)
+{
+  console.log(customer);
+  
+  this.UpdateCustomer.patchValue(customer)
+  console.log(this.UpdateCustomer.value);
+  
+  this.dialog.open(this.callUpdateDialog)
+}
+
+Update()
+{
+  this.adminService.UpdateCustomer(this.UpdateCustomer.value)
+  this.dialog.closeAll()
+}
+deletedItemId = 0
+OpenDeleteDialog(id: number)
+{
+  this.deletedItemId = id
+this.dialog.open(this.callDeleteDialog)
+}
+
+Delete()
+{
+  this.adminService.DeleteCustomer(this.deletedItemId)
+}
+user: any
+OpenMoreDialog(user: any)
+{
+  this.user = user
+this.dialog.open(this.callMoreDialog)
 }
 }

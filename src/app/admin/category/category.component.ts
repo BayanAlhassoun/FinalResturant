@@ -20,6 +20,10 @@ import { AdminService } from 'src/app/services/admin.service';
 export class CategoryComponent {
 
  @ViewChild('CreateCategoryDialog') callCreateCategoryDialog !: TemplateRef<any>;
+ @ViewChild('UpdateCategoryDialog') callUpdateCategoryDialog !: TemplateRef<any>;
+ @ViewChild('DeleteCategoryDialog') callDeleteDialog!: TemplateRef<any>
+  @ViewChild('MoreCategoryDialog') callMoreDialog!: TemplateRef<any>
+
   constructor(public adminService: AdminService, public dialog: MatDialog)
   {
 
@@ -56,6 +60,13 @@ CreateForm: FormGroup = new FormGroup(
   }
 )
 
+
+UpdateForm: FormGroup = new FormGroup(
+  {
+    category_Id: new FormControl(),
+    category_Name: new FormControl('', [Validators.required, Validators.minLength(3)])
+  }
+)
 Create()
 {
   this.adminService.CreateCategory(this.CreateForm.value);
@@ -66,10 +77,49 @@ OpenCreateDialog()
 {
 this.dialog.open(this.callCreateCategoryDialog,
   {
-    height: '50%',
-    width: '50%'
+    height: '400px',
+    width: '300px'   
+
   }
 )
 }
 
+OpenUpdateDialog(category: any)
+{
+  console.log(category);
+  
+  this.UpdateForm.patchValue(category)
+  console.log(this.UpdateForm.value);
+  
+  this.dialog.open(this.callUpdateCategoryDialog,
+    {
+      height: "250px",
+      width: "250px"
+    }
+  )
+}
+
+Update()
+{
+  this.adminService.UpdateCategory(this.UpdateForm.value)
+  this.dialog.closeAll()
+}
+deletedItemId = 0
+Delete()
+{
+  this.adminService.DeleteCategory(this.deletedItemId)
+}
+
+OpenDeleteDialog(id: number)
+{
+  this.deletedItemId = id
+this.dialog.open(this.callDeleteDialog)
+}
+
+
+OpenMoreDialog(id: number)
+{
+this.adminService.GetCategoryById(id)
+this.dialog.open(this.callMoreDialog)
+}
 }
