@@ -103,5 +103,31 @@ GetCategoryById(id: number)
   })
 }
 
+Register(user: any)
+{
+  console.log(user);
+  
+  user.imageName = this.imageName
+  console.log(user);
+  
+this.httpClient.post("https://localhost:7031/api/login/register", user).subscribe({
+  next: ()=>{console.log("Registerd Successfully");
+  },
+  error: (err)=>{console.log(err);
+  }
+})
+}
+
+imageName: any
+
+UploadImage(formDate: any)
+{
+this.httpClient.post("https://localhost:7031/api/login/UploadImage", formDate, {responseType: 'text'}).subscribe({
+  next: (result)=> {this.imageName = result ,console.log(result);
+  },
+  error: (err)=>{console.log(err);
+    }
+})
+}
 
 }
