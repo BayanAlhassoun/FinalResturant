@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -12,6 +13,14 @@ export class LoginComponent {
 {
 adminService.name = "Ahmad"
 }
+
+LoginForm: FormGroup = new FormGroup(
+  {
+    username: new FormControl(),
+    password: new FormControl()
+  }
+)
+
 
 ngOnInit()
 {
@@ -41,6 +50,11 @@ ngOnInit()
     document.body.appendChild(script)
   }
   )
+}
+
+Login()
+{
+  this.adminService.Login(this.LoginForm.value)
 }
 
 }

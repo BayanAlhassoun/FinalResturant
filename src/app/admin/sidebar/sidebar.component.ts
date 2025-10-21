@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,10 @@ import { Component } from '@angular/core';
   ]
 })
 export class SidebarComponent {
+  constructor(private router: Router)
+  {
+
+  }
 ngOnInit()
 {
   let scripts = [
@@ -36,5 +41,11 @@ ngOnInit()
     document.body.appendChild(script)
   }
   )
+}
+
+Logout()
+{
+  localStorage.clear()
+this.router.navigate(['/login'])
 }
 }
