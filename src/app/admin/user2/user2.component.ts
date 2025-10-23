@@ -1,22 +1,17 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { AdminModule } from '../admin.module';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css'
-  ],
-
+  selector: 'app-user2',
+  templateUrl: './user2.component.html',
+  styleUrls: ['./user2.component.css']
 })
-
-export class IndexComponent {
-
+export class User2Component {
   constructor(public adminService: AdminService)
   {
 
   }
-  userCount: any
-
   ngOnInit()
 {
 
@@ -58,7 +53,6 @@ export class IndexComponent {
   }
   )
 
-// this.adminService.GetAllCustomers();
-this.adminService.GetCustomerCount()
+this.adminService.GetAllUsers()
 }
 }

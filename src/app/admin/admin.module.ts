@@ -10,6 +10,8 @@ import { UsersComponent } from './users/users.component';
 import { ProductsComponent } from './products/products.component';
 import { IndexComponent } from './index/index.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProfileComponent } from './profile/profile.component';
+import { User2Component } from './user2/user2.component';
 
 
 
@@ -21,7 +23,9 @@ import { SharedModule } from '../shared/shared.module';
     CategoryComponent,
     UsersComponent,
     ProductsComponent,
-    IndexComponent
+    IndexComponent,
+    ProfileComponent,
+    User2Component
   ],
   imports: [
     CommonModule,

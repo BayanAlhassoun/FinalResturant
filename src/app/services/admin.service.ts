@@ -12,7 +12,8 @@ export class AdminService {
 
   name = "Bayan"
   categories: any
-  customers: any
+  customers: any=[]
+  SearchResult: any
 
   GetAllCategories() {
     this.httpClient.get("https://localhost:7031/api/category").subscribe(
@@ -28,7 +29,9 @@ export class AdminService {
   GetAllCustomers() {
     this.httpClient.get("https://localhost:7031/api/customer").subscribe(
       {
-        next: (res) => { this.customers = res },
+        next: (res) => { this.customers = res;
+          this.SearchResult = res
+         },
         error: (err) => {
           console.log(err);
         }
@@ -164,5 +167,46 @@ export class AdminService {
       }
     })
   }
+
+
+Search(name: any)
+{
+this.httpClient.get(`https://localhost:7031/api/customer/search/${name}`).subscribe({
+  next: (result)=>{this.customers = result},
+  error: (err)=>{console.log(err);
+  }
+})
+}
+
+userCount:any
+GetCustomerCount()
+{
+  this.httpClient.get("https://localhost:7031/api/customer/GetCustomersCount").subscribe({
+    next: (res)=>{this.userCount = res},
+    error: (err)=>{console.log(err);
+    }
+  })
+}
+user: any
+GetUserById(id: number)
+{
+this.httpClient.get(`https://localhost:7031/api/customer/GetuserById/${id}`).subscribe({
+  next:(result)=>{ this.user= result },
+  error:(err)=>{console.log(err);
+  }
+})
+}
+
+users: any
+
+GetAllUsers()
+{
+  this.httpClient.get("https://localhost:7031/api/customer/GetAllUsers").subscribe({
+    next:(result)=>{this.users= result},
+    error:(err)=>{console.log(err);
+    }
+  })
+}
+
 
 }

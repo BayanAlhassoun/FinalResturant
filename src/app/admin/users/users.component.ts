@@ -113,4 +113,21 @@ OpenMoreDialog(user: any)
   this.user = user
 this.dialog.open(this.callMoreDialog)
 }
+
+
+searchForm: FormGroup = new FormGroup(
+  {
+    searchValue: new FormControl()
+  }
+)
+
+Search()
+{
+  console.log(this.searchForm.value);
+  console.log(this.searchForm.controls['searchValue'].value);//bay
+  
+  this.adminService.SearchResult = this.adminService.customers.filter((x:any)=>x.name.toUpperCase().includes(this.searchForm.controls['searchValue'].value.toUpperCase()))
+  
+}
+
 }
